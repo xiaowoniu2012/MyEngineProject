@@ -7,7 +7,8 @@
 //
 
 #import "ZZLAppDelegate.h"
-
+#import "ZZLHttpManager.h"
+#import "MovieList.h"
 @implementation ZZLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -16,9 +17,49 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+//    [[ZZLHttpManager sharedInstance]requestMovieListOnSuccess:^(NSMutableArray *listOfModalObjects) {
+//        NSLog(@"did it work");
+//        NSLog(@"list:%@",listOfModalObjects);
+//    } OnFail:^(NSError *erro) {
+//        NSLog(@"request erro!");
+//    }];
+    
+
+    [ZZLHttpManager requestModelListWithServicePath:HOME_PAGE_URL
+                                           keyPaths:[NSArray arrayWithObjects:@"hot",@"movie_list", nil]
+                                         modelClass:[MovieList class]
+                                          onSuccess:^(NSMutableArray *listOfModalObjects){
+        NSLog(@"list:%@",listOfModalObjects);
+    } onFail:^(NSError *erro) {
+        NSLog(@"request erro!");
+    }];
+    [ZZLHttpManager cancelRequestWithPath:HOME_PAGE_URL];
+
+//    [ZZLHttpManager requestSingleModelWithServicePath:HOME_PAGE_URL
+//                                             keyPaths:@[@"hot",@"movie_list"]
+//                                           modelClass:[MovieList class]
+//                                            onSuccess:^(ZZLBaseJsonObject *modelObject) {
+//        NSLog(@"single object:%@",modelObject);
+//    } onFail:^(NSError *erro) {
+//        NSLog(@"single erro");
+//    }];
+
+    
+    [self performSelector:@selector(delay1) withObject:nil afterDelay:1.0f];
+
+     
     return YES;
 }
-
+- (void)delay1
+{
+    [ZZLHttpManager requestWithServicePath:HOME_PAGE_URL
+                                 onSuccess:^(id obj) {
+                                     NSLog(@"<<<<<<<requst data:%@",obj);
+                                 } onFail:^(NSError *erro) {
+                                     NSLog(@"request erro");
+                                 }];
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
