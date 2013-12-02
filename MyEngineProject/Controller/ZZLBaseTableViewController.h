@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ZZLBaseTableViewController : UITableViewController
+#import "PullTableView.h"
+@interface ZZLBaseTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PullTableViewDelegate>
 
 @end

@@ -9,6 +9,8 @@
 #import "ZZLAppDelegate.h"
 #import "ZZLHttpManager.h"
 #import "MovieList.h"
+#import "ZZLDemoViewController.h"
+
 @implementation ZZLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -16,6 +18,12 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    ZZLDemoViewController *rootViewController = [[ZZLDemoViewController alloc]initWithNibName:NSStringFromClass([ZZLDemoViewController class]) bundle:Nil];
+    
+    UINavigationController *rootvc = [[UINavigationController alloc]initWithRootViewController:rootViewController];
+    self.window.rootViewController = rootvc;
+    
     [self.window makeKeyAndVisible];
     
 //    [[ZZLHttpManager sharedInstance]requestMovieListOnSuccess:^(NSMutableArray *listOfModalObjects) {

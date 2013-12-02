@@ -10,5 +10,5 @@
 
 @interface ZZLDemoViewController : UIViewController
 
-@property (unsafe_unretained, nonatomic) IBOutlet UITableView *myTableView;
+@property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @end

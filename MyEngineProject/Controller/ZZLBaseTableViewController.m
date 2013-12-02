@@ -7,31 +7,63 @@
 //
 
 #import "ZZLBaseTableViewController.h"
-
+#import <objc/runtime.h>
+//@interface ZZLBaseTableViewController (refreshHeadView)
+//@property (nonatomic,assign) BOOL isContainedRefreshView;
+//@property (nonatomic,assign) BOOL isLoading;
+//@end
+//@implementation ZZLBaseTableViewController (refreshHeadView)
+//static char isContainedRefreshViewKey;
+//static char isLoadingKey;
+//- (BOOL) isContainedRefreshView
+//{
+//    return [objc_getAssociatedObject(self, &isContainedRefreshViewKey) boolValue];
+//}
+//- (void) setIsContainedRefreshView:(BOOL)isContainedRefreshView
+//{
+//    objc_setAssociatedObject(self, &isContainedRefreshViewKey, [NSNumber numberWithBool:isContainedRefreshView], OBJC_ASSOCIATION_ASSIGN);
+//}
+//- (BOOL) isLoading
+//{
+//    return [objc_getAssociatedObject(self, &isLoadingKey) boolValue];
+//}
+//- (void) setIsLoading:(BOOL)isLoading
+//{
+//    objc_setAssociatedObject(self, &isLoadingKey, [NSNumber numberWithBool:isLoading], OBJC_ASSOCIATION_ASSIGN);
+//}
+//@end
 @interface ZZLBaseTableViewController ()
 
 @end
 
 @implementation ZZLBaseTableViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    PullTableView *_pullTableView;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if (!_pullTableView) {
+        _pullTableView = [[PullTableView alloc]initWithFrame:self.view.bounds];
+        _pullTableView.pullArrowImage = [UIImage imageNamed:@"blackArrow"];
+        _pullTableView.pullBackgroundColor = [UIColor yellowColor];
+        _pullTableView.pullTextColor = [UIColor blackColor];
+        _pullTableView.dataSource = self;
+        _pullTableView.delegate = self;
+        _pullTableView.pullDelegate = self;
+        [self.view addSubview:_pullTableView];
+    }
+    [_pullTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+    [super viewWillAppear:animated];
+    if(!_pullTableView.pullTableIsRefreshing) {
+        _pullTableView.pullTableIsRefreshing = YES;
+        [self performSelector:@selector(refreshTable) withObject:nil afterDelay:3.0f];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,71 +71,68 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - Refresh and load more methods
 
+- (void) refreshTable
+{
+    /*
+     
+     Code to actually refresh goes here.
+     
+     */
+    _pullTableView.pullLastRefreshDate = [NSDate date];
+    _pullTableView.pullTableIsRefreshing = NO;
+}
+
+- (void) loadMoreDataToTable
+{
+    /*
+     
+     Code to actually load more data goes here.
+     
+     */
+    _pullTableView.pullTableIsLoadingMore = NO;
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 20;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (!cell) {
+
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    cell.textLabel.text = [NSString stringWithFormat:@"row-->%d",indexPath.row];
     // Configure the cell...
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+#pragma mark - PullTableViewDelegate
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)pullTableViewDidTriggerRefresh:(PullTableView *)pullTableView
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    [self performSelector:@selector(refreshTable) withObject:nil afterDelay:3.0f];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (void)pullTableViewDidTriggerLoadMore:(PullTableView *)pullTableView
 {
+    [self performSelector:@selector(loadMoreDataToTable) withObject:nil afterDelay:3.0f];
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+
 
 #pragma mark - Table view delegate
 

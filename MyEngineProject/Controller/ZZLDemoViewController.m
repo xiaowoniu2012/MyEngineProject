@@ -7,15 +7,17 @@
 //
 
 #import "ZZLDemoViewController.h"
+#import "ZZLBaseTableViewController.h"
+@interface ZZLDemoViewController ()
 
-@interface ZZLDemoViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
 
 @implementation ZZLDemoViewController
 {
-    NSArray *listArr;
+    NSArray *listArray;
 }
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,9 +30,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"功能入口";
-    // Do any additional setup after loading the view from its nib.
-    listArr = [[NSArray alloc]initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"titleList" ofType:@"plist"]];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"titleList" ofType:@"plist"];
+    listArray = [[NSArray alloc]initWithContentsOfFile:path];
+    [self.myTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,16 +42,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidUnload {
-    [self setMyTableView:nil];
-    [super viewDidUnload];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
 
     return 1;
 }
@@ -56,19 +53,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-
-    return [listArr count];
+    return [listArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+
     // Configure the cell...
-    cell.textLabel.text = listArr[indexPath.row];
+    cell.textLabel.text = listArray[indexPath.row];
     return cell;
 }
 
@@ -116,11 +111,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSInteger row = indexPath.row;
+    if (row == 0) {
+        ZZLBaseTableViewController *detailViewController = [[ZZLBaseTableViewController alloc] init];
+        [self.navigationController pushViewController:detailViewController animated:YES];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+     
 }
 @end
