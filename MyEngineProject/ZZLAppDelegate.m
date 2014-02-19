@@ -10,22 +10,27 @@
 #import "ZZLHttpManager.h"
 #import "MovieList.h"
 #import "ZZLDemoViewController.h"
-
+#import "MMDrawerController.h"
+#import "MMDrawerVisualState.h"
+#import "MMExampleDrawerVisualStateManager.h"
+#import "ZZLLeftViewController.h"
+#import "ZZLCenterVCManger.h"
 @implementation ZZLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    // Override point for customization after application launch.
+//    self.window.backgroundColor = [UIColor whiteColor];
+//    
+//    ZZLDemoViewController *rootViewController = [[ZZLDemoViewController alloc]initWithNibName:NSStringFromClass([ZZLDemoViewController class]) bundle:Nil];
+//    
+//    UINavigationController *rootvc = [[UINavigationController alloc]initWithRootViewController:rootViewController];
+//    self.window.rootViewController = rootvc;
+//    
+//    [self.window makeKeyAndVisible];
     
-    ZZLDemoViewController *rootViewController = [[ZZLDemoViewController alloc]initWithNibName:NSStringFromClass([ZZLDemoViewController class]) bundle:Nil];
-    
-    UINavigationController *rootvc = [[UINavigationController alloc]initWithRootViewController:rootViewController];
-    self.window.rootViewController = rootvc;
-    
-    [self.window makeKeyAndVisible];
-    
+    [self setup];
 //    [[ZZLHttpManager sharedInstance]requestMovieListOnSuccess:^(NSMutableArray *listOfModalObjects) {
 //        NSLog(@"did it work");
 //        NSLog(@"list:%@",listOfModalObjects);
@@ -42,7 +47,7 @@
     } onFail:^(NSError *erro) {
         NSLog(@"request erro!");
     }];
-    [ZZLHttpManager cancelRequestWithPath:HOME_PAGE_URL];
+    //[ZZLHttpManager cancelRequestWithPath:HOME_PAGE_URL];
 
 //    [ZZLHttpManager requestSingleModelWithServicePath:HOME_PAGE_URL
 //                                             keyPaths:@[@"hot",@"movie_list"]
@@ -54,10 +59,45 @@
 //    }];
 
     
-    [self performSelector:@selector(delay1) withObject:nil afterDelay:1.0f];
+   // [self performSelector:@selector(delay1) withObject:nil afterDelay:1.0f];
 
      
     return YES;
+}
+
+- (void)setup
+{
+    UIViewController * leftSideDrawerViewController = [[ZZLLeftViewController alloc] init];
+    
+    UIViewController * centerViewController = [[ZZLCenterVCManger shareInstance]getViewControllerWithType:kCenterVC_ITEM1];
+    
+
+    
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:centerViewController];
+    
+    MMDrawerController * drawerController = [[MMDrawerController alloc]
+                                             initWithCenterViewController:navigationController
+                                             leftDrawerViewController:leftSideDrawerViewController
+                                             rightDrawerViewController:nil];
+    [drawerController setMaximumLeftDrawerWidth:150];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+    [drawerController
+     setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
+         MMDrawerControllerDrawerVisualStateBlock block;
+         block = [[MMExampleDrawerVisualStateManager sharedManager]
+                  drawerVisualStateBlockForDrawerSide:drawerSide];
+         if(block){
+             block(drawerController, drawerSide, percentVisible);
+         }
+     }];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setRootViewController:drawerController];
+    // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
 }
 - (void)delay1
 {

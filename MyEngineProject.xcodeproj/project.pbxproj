@@ -29,6 +29,15 @@
 		7B911C4717D9BF3700523DEF /* ZZLCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B911C4617D9BF3700523DEF /* ZZLCacheManager.m */; };
 		7BAEFB1B184B99DB0015C011 /* titleList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7BAEFB1A184B99DB0015C011 /* titleList.plist */; };
 		7BAEFB26184BA0FF0015C011 /* ZZLBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAEFB25184BA0FF0015C011 /* ZZLBaseTableViewController.m */; };
+		7BBB0DD718B5035800695787 /* ZZLLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DD518B5035800695787 /* ZZLLeftViewController.m */; };
+		7BBB0DD818B5035800695787 /* ZZLLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BBB0DD618B5035800695787 /* ZZLLeftViewController.xib */; };
+		7BBB0DDC18B5039700695787 /* ZZLCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DDA18B5039700695787 /* ZZLCenterViewController.m */; };
+		7BBB0DDD18B5039700695787 /* ZZLCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7BBB0DDB18B5039700695787 /* ZZLCenterViewController.xib */; };
+		7BBB0DE518B5040B00695787 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DE018B5040B00695787 /* MMDrawerController.m */; };
+		7BBB0DE618B5040B00695787 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DE218B5040B00695787 /* MMDrawerVisualState.m */; };
+		7BBB0DE718B5040B00695787 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DE418B5040B00695787 /* UIViewController+MMDrawerController.m */; };
+		7BBB0DEA18B5052E00695787 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DE918B5052E00695787 /* MMExampleDrawerVisualStateManager.m */; };
+		7BBB0DED18B50DC900695787 /* ZZLCenterVCManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BBB0DEC18B50DC900695787 /* ZZLCenterVCManger.m */; };
 		7BCAD78317D19A5B004AD0F3 /* NSAlert+MKNetworkKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCAD77017D19A5A004AD0F3 /* NSAlert+MKNetworkKitAdditions.m */; };
 		7BCAD78417D19A5B004AD0F3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCAD77217D19A5A004AD0F3 /* NSData+Base64.m */; };
 		7BCAD78517D19A5B004AD0F3 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BCAD77417D19A5B004AD0F3 /* NSDate+RFC1123.m */; };
@@ -103,6 +112,22 @@
 		7BAEFB1A184B99DB0015C011 /* titleList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = titleList.plist; sourceTree = "<group>"; };
 		7BAEFB24184BA0FF0015C011 /* ZZLBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZLBaseTableViewController.h; sourceTree = "<group>"; };
 		7BAEFB25184BA0FF0015C011 /* ZZLBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZLBaseTableViewController.m; sourceTree = "<group>"; };
+		7BBB0DD418B5035800695787 /* ZZLLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZLLeftViewController.h; sourceTree = "<group>"; };
+		7BBB0DD518B5035800695787 /* ZZLLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZLLeftViewController.m; sourceTree = "<group>"; };
+		7BBB0DD618B5035800695787 /* ZZLLeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZZLLeftViewController.xib; sourceTree = "<group>"; };
+		7BBB0DD918B5039700695787 /* ZZLCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZLCenterViewController.h; sourceTree = "<group>"; };
+		7BBB0DDA18B5039700695787 /* ZZLCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZLCenterViewController.m; sourceTree = "<group>"; };
+		7BBB0DDB18B5039700695787 /* ZZLCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZZLCenterViewController.xib; sourceTree = "<group>"; };
+		7BBB0DDF18B5040B00695787 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		7BBB0DE018B5040B00695787 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		7BBB0DE118B5040B00695787 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		7BBB0DE218B5040B00695787 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		7BBB0DE318B5040B00695787 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		7BBB0DE418B5040B00695787 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		7BBB0DE818B5052E00695787 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
+		7BBB0DE918B5052E00695787 /* MMExampleDrawerVisualStateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleDrawerVisualStateManager.m; sourceTree = "<group>"; };
+		7BBB0DEB18B50DC900695787 /* ZZLCenterVCManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZLCenterVCManger.h; sourceTree = "<group>"; };
+		7BBB0DEC18B50DC900695787 /* ZZLCenterVCManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZZLCenterVCManger.m; sourceTree = "<group>"; };
 		7BCAD76F17D19A5A004AD0F3 /* NSAlert+MKNetworkKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAlert+MKNetworkKitAdditions.h"; sourceTree = "<group>"; };
 		7BCAD77017D19A5A004AD0F3 /* NSAlert+MKNetworkKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAlert+MKNetworkKitAdditions.m"; sourceTree = "<group>"; };
 		7BCAD77117D19A5A004AD0F3 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -269,11 +294,20 @@
 		7B00844A17D08F7000E0F90A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7BBB0DDE18B503FF00695787 /* MMDrawer */,
+				7BBB0DEB18B50DC900695787 /* ZZLCenterVCManger.h */,
+				7BBB0DEC18B50DC900695787 /* ZZLCenterVCManger.m */,
 				7BAEFB24184BA0FF0015C011 /* ZZLBaseTableViewController.h */,
 				7BAEFB25184BA0FF0015C011 /* ZZLBaseTableViewController.m */,
 				7B0A8368184BA1AD00D42826 /* ZZLDemoViewController.h */,
 				7B0A8369184BA1AD00D42826 /* ZZLDemoViewController.m */,
 				7B0A836A184BA1AD00D42826 /* ZZLDemoViewController.xib */,
+				7BBB0DD418B5035800695787 /* ZZLLeftViewController.h */,
+				7BBB0DD518B5035800695787 /* ZZLLeftViewController.m */,
+				7BBB0DD618B5035800695787 /* ZZLLeftViewController.xib */,
+				7BBB0DD918B5039700695787 /* ZZLCenterViewController.h */,
+				7BBB0DDA18B5039700695787 /* ZZLCenterViewController.m */,
+				7BBB0DDB18B5039700695787 /* ZZLCenterViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -331,6 +365,21 @@
 				7B911C4617D9BF3700523DEF /* ZZLCacheManager.m */,
 			);
 			path = CacheManager;
+			sourceTree = "<group>";
+		};
+		7BBB0DDE18B503FF00695787 /* MMDrawer */ = {
+			isa = PBXGroup;
+			children = (
+				7BBB0DE818B5052E00695787 /* MMExampleDrawerVisualStateManager.h */,
+				7BBB0DE918B5052E00695787 /* MMExampleDrawerVisualStateManager.m */,
+				7BBB0DDF18B5040B00695787 /* MMDrawerController.h */,
+				7BBB0DE018B5040B00695787 /* MMDrawerController.m */,
+				7BBB0DE118B5040B00695787 /* MMDrawerVisualState.h */,
+				7BBB0DE218B5040B00695787 /* MMDrawerVisualState.m */,
+				7BBB0DE318B5040B00695787 /* UIViewController+MMDrawerController.h */,
+				7BBB0DE418B5040B00695787 /* UIViewController+MMDrawerController.m */,
+			);
+			name = MMDrawer;
 			sourceTree = "<group>";
 		};
 		7BCAD76C17D19A5A004AD0F3 /* Extern */ = {
@@ -509,6 +558,7 @@
 			files = (
 				7B00841F17D08EF700E0F90A /* InfoPlist.strings in Resources */,
 				7B00842717D08EF700E0F90A /* Default.png in Resources */,
+				7BBB0DD818B5035800695787 /* ZZLLeftViewController.xib in Resources */,
 				7BFEFE2B184CDEB00033137B /* blueArrow@2x.png in Resources */,
 				7BFEFE2E184CDEB00033137B /* whiteArrow.png in Resources */,
 				7BFEFE2D184CDEB00033137B /* grayArrow@2x.png in Resources */,
@@ -518,6 +568,7 @@
 				7BFEFE2C184CDEB00033137B /* grayArrow.png in Resources */,
 				7BFEFE28184CDEB00033137B /* blackArrow.png in Resources */,
 				7B0A836C184BA1AD00D42826 /* ZZLDemoViewController.xib in Resources */,
+				7BBB0DDD18B5039700695787 /* ZZLCenterViewController.xib in Resources */,
 				7BFEFE29184CDEB00033137B /* blackArrow@2x.png in Resources */,
 				7BFEFE2F184CDEB00033137B /* whiteArrow@2x.png in Resources */,
 				7BAEFB1B184B99DB0015C011 /* titleList.plist in Resources */,
@@ -555,8 +606,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BBB0DE618B5040B00695787 /* MMDrawerVisualState.m in Sources */,
+				7BBB0DEA18B5052E00695787 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				7BBB0DED18B50DC900695787 /* ZZLCenterVCManger.m in Sources */,
 				7B00842117D08EF700E0F90A /* main.m in Sources */,
 				7B00842517D08EF700E0F90A /* ZZLAppDelegate.m in Sources */,
+				7BBB0DE718B5040B00695787 /* UIViewController+MMDrawerController.m in Sources */,
+				7BBB0DE518B5040B00695787 /* MMDrawerController.m in Sources */,
 				7B00845217D0908200E0F90A /* ZZLBaseJsonObject.m in Sources */,
 				7BFEFE26184CDEB00033137B /* MessageInterceptor.m in Sources */,
 				7BCAD78317D19A5B004AD0F3 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
@@ -569,8 +625,10 @@
 				7BCAD78917D19A5B004AD0F3 /* MKNetworkEngine.m in Sources */,
 				7BCAD78A17D19A5B004AD0F3 /* MKNetworkOperation.m in Sources */,
 				7BCAD78B17D19A5B004AD0F3 /* Reachability.m in Sources */,
+				7BBB0DDC18B5039700695787 /* ZZLCenterViewController.m in Sources */,
 				7BCAD79517D21F45004AD0F3 /* ZZLHttpManager.m in Sources */,
 				7BCAD79E17D25636004AD0F3 /* ZZLRequestOperation.m in Sources */,
+				7BBB0DD718B5035800695787 /* ZZLLeftViewController.m in Sources */,
 				7BCAD7A117D2603A004AD0F3 /* ZZLModalObjectFactory.m in Sources */,
 				7BCAD7A417D261BC004AD0F3 /* MovieList.m in Sources */,
 				7BCAD7A717D26B77004AD0F3 /* ZZLHttpRequstEngine.m in Sources */,
@@ -680,11 +738,13 @@
 		7B00844417D08EF800E0F90A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: 泽龙 邹 (2XT47Y9SW8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MyEngineProject/MyEngineProject-Prefix.pch";
 				INFOPLIST_FILE = "MyEngineProject/MyEngineProject-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "508E6C3E-5337-4FDD-8C95-8442F88E1BC9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -692,11 +752,13 @@
 		7B00844517D08EF800E0F90A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: 泽龙 邹 (2XT47Y9SW8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MyEngineProject/MyEngineProject-Prefix.pch";
 				INFOPLIST_FILE = "MyEngineProject/MyEngineProject-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "508E6C3E-5337-4FDD-8C95-8442F88E1BC9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -7,6 +7,22 @@
 //
 
 #import "ZZLHttpRequstEngine.h"
+#import "Reachability.h"
+
+typedef enum
+{
+    NETWORK_UNCONNECT_ERROR=9001,//没有连接网络
+    NETWORK_EXCEPTION = 9002,//网络连接异常
+    NETWORK_REQUEST_TIMEOUT = 9003 //网络连接超时
+    
+    
+} NETWORK_ERROR;
+
+#define ERROR_NETWORK_UNCONNECT_DESC        @"网络不可用，请检查！"
+#define ERROR_NETWORK_EXCEPTION_DESC        @"网络连接异常，请重试!"
+#define ERROR_NETWORK_REQUEST_TIMEOUT_DESC  @"网络连接超时, 请重试!"
+
+
 
 @implementation ZZLHttpRequstEngine
 
@@ -52,7 +68,52 @@
     
     [super prepareHeaders:operation];
 }
+#pragma mark - 
+#pragma mark - handle error response
++ (NSError *)CheckNetworkConnection
+{
+    
+    NSInteger status = [[Reachability reachabilityForInternetConnection] currentReachabilityStatus];
+    
+    if(status == NotReachable)
+    {
+        NSError *err=[NSError errorWithDomain:@"fanxing.kugou" code:NETWORK_UNCONNECT_ERROR userInfo:
+                      [NSDictionary dictionaryWithObjectsAndKeys:ERROR_NETWORK_UNCONNECT_DESC,@"description", nil]];
+        return err;
+    }
+    return nil;
+}
 
++ (void)handleServerResponseError:(NSError *)error FailureBlock:(erroBlock)failure
+{
+    if (failure) {
+        //检查网络连接
+        NSError *networkError = [self CheckNetworkConnection];
+        if (networkError) {
+
+            failure(networkError);
+            return ;
+        }else{
+            if (error && [error.domain isEqualToString:@"NSURLErrorDomain"]) {
+                if (error.code == NSURLErrorTimedOut) {
+                    NSError *err=[NSError errorWithDomain:@"ZZLHttpRequest.engine" code:NETWORK_UNCONNECT_ERROR userInfo:
+                                  [NSDictionary dictionaryWithObjectsAndKeys:ERROR_NETWORK_REQUEST_TIMEOUT_DESC,@"description", nil]];
+
+                        failure(err);
+                    
+                    
+                }else
+                {
+                    NSError *err=[NSError errorWithDomain:@"ZZLHttpRequest.engine" code:NETWORK_UNCONNECT_ERROR userInfo:
+                                  [NSDictionary dictionaryWithObjectsAndKeys:ERROR_NETWORK_EXCEPTION_DESC,@"description", nil]];
+                 
+                        failure(err);
+                    
+                }
+            }
+        }
+    }
+}
 #pragma mark - general request
 -(MKNetworkOperationState)requestWithServicePath:(NSString *)path
                                        onSuccess:(objectBlock)successBlock
@@ -61,7 +122,6 @@
     __block MKNetworkOperationState state = MKNetworkOperationStateReady;
     ZZLRequestOperation *op = [_requestPoolDict objectForKey:path];
     if (op == nil) {
-        NSLog(@"did it work!!!");
         op = (ZZLRequestOperation *)[self operationWithPath:path];
         [_requestPoolDict setObject:op forKey:path];
         
@@ -71,25 +131,29 @@
             
             //原始数据
             id object  = [completedOperation responseJSON];
-
-            successBlock(object);
+            
+            if (successBlock) {
+                successBlock(object);
+            }
+            
             
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFinished;
-            NSLog(@"did it work!!!!!!");
+
         } onError:^(NSError *error) {
             
-            errorBlock(error);
+            [ZZLHttpRequstEngine handleServerResponseError:error FailureBlock:errorBlock];
+            
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFailed;
-            NSLog(@"did !!!it work!!!");
+
         }];
         [self enqueueOperation:op];
     }else
     {
         state = MKNetworkOperationStateExecuting;
     }
-    NSLog(@"did it work!");
+
     return state;
 }
 - (MKNetworkOperationState)requestSingleModelWithServicePath:(NSString *)path
@@ -126,18 +190,27 @@
                     object = (NSDictionary *)object;
                 }
                 modelObject= [ZZLModalObjectFactory ModalObjectWithClass:className jsonDictionary:object];
-                successBlock(modelObject);
+                
+                if (successBlock) {
+                    successBlock(modelObject);
+                }
+                
                 
             }else{
                 
-                successBlock(nil);
+                if (successBlock) {
+                    successBlock(nil);
+                }
+                
             }
             
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFinished;
         } onError:^(NSError *error) {
             
-            errorBlock(error);
+            [ZZLHttpRequstEngine handleServerResponseError:error FailureBlock:errorBlock];
+
+            
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFailed;
         }];
@@ -196,7 +269,11 @@
                     //返回只有一个对象的列表
                     [ModelList addObject:[ZZLModalObjectFactory ModalObjectWithClass:className jsonDictionary:object]];
                 }
-                successBlock(ModelList);
+                
+                if (successBlock) {
+                    successBlock(ModelList);
+                }
+                
                 
             }else if ([object isKindOfClass:[NSArray class]])
             {
@@ -204,17 +281,25 @@
                 [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     [ModelList addObject:[ZZLModalObjectFactory ModalObjectWithClass:className jsonDictionary:obj]];
                 }];
-                successBlock(ModelList);
+                if (successBlock) {
+                    successBlock(ModelList);
+                }
+                
                 
             }else
             {
-                successBlock(nil);
+                if (successBlock) {
+                    successBlock(nil);
+                }
+                
             }
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFinished;
         } onError:^(NSError *error) {
             
-            errorBlock(error);
+            [ZZLHttpRequstEngine handleServerResponseError:error FailureBlock:errorBlock];
+
+            
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFailed;
         }];
@@ -242,11 +327,15 @@
         
         [op onCompletion:^(MKNetworkOperation *completedOperation) {
             NSMutableDictionary *responseDict = [completedOperation responseJSON];
-            successBlock(responseDict);
+            if (successBlock) {
+                successBlock(responseDict);
+            }
+            
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFinished;
         } onError:^(NSError *error) {
-            errorBlock(error);
+            [ZZLHttpRequstEngine handleServerResponseError:error FailureBlock:errorBlock];
+            
             [_requestPoolDict removeObjectForKey:path];
             state = MKNetworkOperationStateFailed;
         }];
@@ -279,9 +368,13 @@
         [movielistJson enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [movielistItems addObject:[ZZLModalObjectFactory ModalObjectWithType:kMovieList jsonDictionary:obj]];
         } ];
-        successBlock(movielistItems);
+        if (successBlock) {
+            successBlock(movielistItems);
+        }
+        
     } onError:^(NSError *error) {
-        erroBlock(error);
+        [ZZLHttpRequstEngine handleServerResponseError:error FailureBlock:erroBlock];
+        
     }];
     [self enqueueOperation:op];
     return op;
